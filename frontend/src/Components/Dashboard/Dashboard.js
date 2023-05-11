@@ -86,6 +86,9 @@ const DashboardStyled = styled.div`
                     grid-column: span 2;
                 }
                 .income, .expense, .balance{
+                    h2{
+                        text-align:center;
+                    }
                     background: #FCF6F9;
                     border: 2px solid #FFFFFF;
                     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
@@ -94,6 +97,7 @@ const DashboardStyled = styled.div`
                     p{
                         font-size: 3.5rem;
                         font-weight: 700;
+                        text-align: center;
                     }
                 }
 
