@@ -6,7 +6,7 @@ export const menuItems = [
         title: 'Dashboard',
         icon: dashboard,
         link: '/dashboard'
-    },
+    },,
     {
         id: 2,
         title: "Incomes",
