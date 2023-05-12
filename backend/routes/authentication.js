@@ -8,6 +8,5 @@ router.post('/login', loginUser)
     .post('/register', upload.single('image'), registerUser)
     .get('/user', authenticate, userInfo)
     .post('/verify-token', verifyToken)
-    .post('/upload-image', authenticate, upload.single('image'), uploadImage);
 
 module.exports = router

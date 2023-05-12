@@ -15,7 +15,7 @@ function Navigation({active, setActive}) {
     return (
         <NavStyled>
             <div className="user-con"> 
-                <img src={avatar} alt="" />
+                <img src={user ? user.image : avatar} alt="" />
                 <div className="text">
                     <h2>{user ? user.username : "Loading..."}</h2>
                 </div>

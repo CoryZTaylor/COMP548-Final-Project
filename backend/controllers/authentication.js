@@ -59,7 +59,8 @@ exports.userInfo = async (req, res) => {
     const user = response[0]
     payload = {
       username: user.username,
-      email: user.email
+      email: user.email,
+      image: user.image
     }
     res.status(200).json(payload)
   } catch (error) {

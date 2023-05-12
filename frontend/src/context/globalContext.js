@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 const BASE_URL = "http://localhost:5001/api/v1/";
+const IMAGE_URL = "http://localhost:5001/"
 
 
 const GlobalContext = React.createContext()
@@ -54,6 +55,7 @@ export const GlobalProvider = ({children}) => {
         const headers = { Authorization: token };
         try {
             const response = await axios.get(`${BASE_URL}user`, { headers });
+            response.data.image = `${IMAGE_URL}${response.data.image}`
             setUser(response.data);
         } catch (error) {
             console.error("Error fetching user:", error);
