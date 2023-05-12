@@ -13,26 +13,25 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    console.log(image)
     const success = await registerUser(username, email, password, confirmPassword, image);
-    // if (success) {
-    //   navigate('/dashboard');
-    // }
+    if (success) {
+      navigate('/dashboard');
+    }
   };  
 
   const toLogin = () => {
     navigate('/login');
   }
 
-  // useEffect(() => {
-  //   const checkToken = async () => {
-  //     const token = localStorage.getItem('token');
-  //     if (token && await verifyToken(token)) {
-  //       navigate('/dashboard');
-  //     }
-  //   };
-  //   checkToken();
-  // }, [navigate, verifyToken]);  
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = localStorage.getItem('token');
+      if (token && await verifyToken(token)) {
+        navigate('/dashboard');
+      }
+    };
+    checkToken();
+  }, [navigate, verifyToken]);  
 
   return (
     <RegisterScreenStyled>
