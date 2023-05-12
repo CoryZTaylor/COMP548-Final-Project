@@ -2,12 +2,72 @@ import React, { useContext, useState } from "react"
 import axios from 'axios'
 
 
-const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = "http://localhost:5001/api/v1/";
 
 
 const GlobalContext = React.createContext()
 
 export const GlobalProvider = ({children}) => {
+    const [token, setToken] = useState(localStorage.getItem('token'));
+
+    const loginUser = async (email, password) => {
+    try {
+        const response = await axios.post(`${BASE_URL}login`, { email, password });
+        localStorage.setItem('token', response.data.token);
+        setToken(response.data.token);
+        return true;
+    } catch (error) {
+        return false;
+    }
+    };
+
+    const registerUser = async (username, email, password, confirmPassword, image) => {
+        try {
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('confirmPassword', confirmPassword);
+            formData.append('image', image);
+        
+            const response = await axios.post(`${BASE_URL}register`, formData);
+            localStorage.setItem('token', response.data.token);
+            setToken(response.data.token);
+            return true;
+        } catch (error) {
+            return false;
+        }
+      };      
+
+    const logoutUser = () => {
+        localStorage.removeItem('token');
+        setToken(null);
+    };
+
+    // Add a new state variable to store the user information
+    const [user, setUser] = useState(null);
+
+    // Function to fetch the user information using the JWT token
+    const fetchUser = async () => {
+        if (!token) return;
+
+        const headers = { Authorization: token };
+        try {
+            const response = await axios.get(`${BASE_URL}user`, { headers });
+            setUser(response.data);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
+    const verifyToken = async (token) => {
+        try {
+          const response = await axios.post(`${BASE_URL}verify-token`, { token });
+          return response.data.success;
+        } catch (error) {
+          return false;
+        }
+      };      
 
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
@@ -15,7 +75,8 @@ export const GlobalProvider = ({children}) => {
 
     //calculate incomes
     const addIncome = async (income) => {
-        const response = await axios.post(`${BASE_URL}add-income`, income)
+        const headers = { Authorization: token };
+        const response = await axios.post(`${BASE_URL}add-income`, income, { headers })
             .catch((err) =>{
                 setError(err.response.data.message)
             })
@@ -23,13 +84,14 @@ export const GlobalProvider = ({children}) => {
     }
 
     const getIncomes = async () => {
-        const response = await axios.get(`${BASE_URL}get-incomes`)
+        const headers = { Authorization: token };
+        const response = await axios.get(`${BASE_URL}get-incomes`, { headers })
         setIncomes(response.data)
-        console.log(response.data)
     }
 
     const deleteIncome = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-income/${id}`)
+        const headers = { Authorization: token };
+        const res  = await axios.delete(`${BASE_URL}delete-income/${id}`, { headers })
         getIncomes()
     }
 
@@ -43,34 +105,47 @@ export const GlobalProvider = ({children}) => {
     }
 
 
-    //calculate incomes
-    const addExpense = async (income) => {
-        const response = await axios.post(`${BASE_URL}add-expense`, income)
-            .catch((err) =>{
-                setError(err.response.data.message)
-            })
-        getExpenses()
-    }
-
+    //calculate expenses
+    const addExpense = async (expense) => {
+        const headers = { Authorization: token };
+      
+        try {
+          const response = await axios.post(`${BASE_URL}add-expense`, expense, { headers });
+          getExpenses();
+        } catch (err) {
+          setError(err.response.data.message);
+        }
+    };
+      
     const getExpenses = async () => {
-        const response = await axios.get(`${BASE_URL}get-expenses`)
-        setExpenses(response.data)
-        console.log(response.data)
-    }
-
+        const headers = { Authorization: token };
+        try {
+          const response = await axios.get(`${BASE_URL}get-expenses`, { headers });
+          setExpenses(response.data);
+        } catch (err) {
+          setError(err.response.data.message);
+        }
+    };
+      
     const deleteExpense = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
-        getExpenses()
-    }
-
+        const headers = { Authorization: token };
+      
+        try {
+          const res = await axios.delete(`${BASE_URL}delete-expense/${id}`, { headers });
+          getExpenses();
+        } catch (err) {
+          setError(err.response.data.message);
+        }
+    };
+      
     const totalExpenses = () => {
-        let totalIncome = 0;
-        expenses.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
-        })
-
-        return totalIncome;
-    }
+        let totalExpenses = 0;
+        expenses.forEach((expense) => {
+          totalExpenses = totalExpenses + expense.amount;
+        });
+      
+        return totalExpenses;
+    };      
 
 
     const totalBalance = () => {
@@ -89,6 +164,13 @@ export const GlobalProvider = ({children}) => {
 
     return (
         <GlobalContext.Provider value={{
+            loginUser,
+            logoutUser,
+            registerUser,
+            user,
+            setUser,
+            fetchUser, 
+            verifyToken, 
             addIncome,
             getIncomes,
             incomes,
@@ -102,7 +184,9 @@ export const GlobalProvider = ({children}) => {
             totalBalance,
             transactionHistory,
             error,
-            setError
+            setError,
+            token,
+            setToken,
         }}>
             {children}
         </GlobalContext.Provider>

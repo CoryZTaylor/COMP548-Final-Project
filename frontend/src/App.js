@@ -1,48 +1,23 @@
-import React, {useState, useMemo} from 'react'
-import styled from "styled-components";
-import bg from './img/bg.png'
-import {MainLayout} from './styles/Layouts'
-import Orb from './Components/Orb/Orb'
-import Navigation from './Components/Navigation/Navigation'
-import Dashboard from './Components/Dashboard/Dashboard';
-import Income from './Components/Income/Income'
-import Expenses from './Components/Expenses/Expenses';
-import { useGlobalContext } from './context/globalContext';
+import { BrowserRouter as Router, Routes, Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
+import bg from './img/bg.png';
+import HomeRoute from './HomeRoute';
+import LoginScreen from './Components/User/LoginScreen';
+import RegisterScreen from './Components/User/RegisterScreen';
 
 function App() {
-  const [active, setActive] = useState(1)
-
-  const global = useGlobalContext()
-  console.log(global);
-
-  const displayData = () => {
-    switch(active){
-      case 1:
-        return <Dashboard />
-      case 2:
-        return <Dashboard />
-      case 3:
-        return <Income />
-      case 4: 
-        return <Expenses />
-      default: 
-        return <Dashboard />
-    }
-  }
-
-  const orbMemo = useMemo(() => {
-    return <Orb />
-  },[])
 
   return (
     <AppStyled bg={bg} className="App">
-      {orbMemo}
-      <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>
-          {displayData()}
-        </main>
-      </MainLayout>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomeRoute />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/dashboard" element={<HomeRoute />} />
+        </Routes>
+      </Router>
     </AppStyled>
   );
 }

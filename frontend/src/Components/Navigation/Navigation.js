@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import avatar from '../../img/avatar.png'
 import { signout } from '../../utils/Icons'
 import { menuItems } from '../../utils/menuItems'
+import { useGlobalContext } from '../../context/globalContext';
 
 function Navigation({active, setActive}) {
+    const { logoutUser, user, fetchUser } = useGlobalContext();
     
+    useEffect(() => {
+        fetchUser(); // Call fetchUser when the component mounts
+      }, []);
+
     return (
         <NavStyled>
-            <div className="user-con">
+            <div className="user-con"> 
                 <img src={avatar} alt="" />
                 <div className="text">
-                    <h2>Mike</h2>
-                    <p>Your Money</p>
+                    <h2>{user ? user.username : "Loading..."}</h2>
                 </div>
             </div>
             <ul className="menu-items">
@@ -28,9 +33,9 @@ function Navigation({active, setActive}) {
                 })}
             </ul>
             <div className="bottom-nav">
-                <li>
+                <button onClick={logoutUser}>
                     {signout} Sign Out
-                </li>
+                </button>
             </div>
         </NavStyled>
     )

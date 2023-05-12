@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 
 const IncomeSchema = new mongoose.Schema({
+    user: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true,
