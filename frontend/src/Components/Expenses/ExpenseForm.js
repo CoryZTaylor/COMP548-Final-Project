@@ -89,7 +89,7 @@ function ExpenseForm() {
                     icon={plus}
                     bPad={'.8rem 1.6rem'}
                     bRad={'30px'}
-                    bg={'var(--color-accent'}
+                    bg={'var(--color-purple'}
                     color={'#fff'}
                 />
             </div>
@@ -139,7 +139,7 @@ const ExpenseFormStyled = styled.form`
         button{
             box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
             &:hover{
-                background: var(--color-green) !important;
+                background: var(--color-pink) !important;
             }
         }
     }
