@@ -1,7 +1,6 @@
 // Components/DashboardWrapper.js
 import React, { useState } from 'react';
 import { MainLayout } from '../../styles/Layouts';
-import Orb from '../Orb/Orb';
 import Navigation from '../Navigation/Navigation';
 import Dashboard from '../Dashboard/Dashboard';
 import Income from '../Income/Income';
@@ -25,7 +24,6 @@ const DashboardWrapper = () => {
 
   return (
     <>
-      <Orb />
       <MainLayout>
         <Navigation active={active} setActive={setActive} />
         <main>{displayData()}</main>

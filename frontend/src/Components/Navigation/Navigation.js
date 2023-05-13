@@ -4,6 +4,7 @@ import avatar from '../../img/avatar.png'
 import { signout } from '../../utils/Icons'
 import { menuItems } from '../../utils/menuItems'
 import { useGlobalContext } from '../../context/globalContext';
+import { Button } from 'react-bootstrap';
 
 function Navigation({active, setActive}) {
     const { logoutUser, user, fetchUser } = useGlobalContext();
@@ -33,9 +34,9 @@ function Navigation({active, setActive}) {
                 })}
             </ul>
             <div className="bottom-nav">
-                <button onClick={logoutUser}>
+                <Button onClick={logoutUser}>
                     {signout} Sign Out
-                </button>
+                </Button>
             </div>
         </NavStyled>
     )
