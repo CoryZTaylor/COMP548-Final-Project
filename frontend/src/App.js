@@ -5,6 +5,8 @@ import bg from './img/bg.png';
 import HomeRoute from './HomeRoute';
 import LoginScreen from './Components/User/LoginScreen';
 import RegisterScreen from './Components/User/RegisterScreen';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
 

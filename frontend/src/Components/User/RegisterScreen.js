@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { Container, Form, Button, Card } from 'react-bootstrap';
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,6 @@ const RegisterScreen = () => {
     }
   };  
 
-  const toLogin = () => {
-    navigate('/login');
-  }
-
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem('token');
@@ -34,86 +30,74 @@ const RegisterScreen = () => {
   }, [navigate, verifyToken]);  
 
   return (
-    <RegisterScreenStyled>
-      <form>
-      <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password:
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Profile Image:
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-        </label>
-        <button type="button" onClick={handleRegister}>
-          Register
-        </button>
-        <button type="button" onClick={toLogin}>
-          Back to Login
-        </button>
-      </form>
-    </RegisterScreenStyled>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Card className="p-4" style={{ borderRadius: '15px' }}>
+        <Card.Body>
+          <h2 className="text-center mb-4">Register</h2>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label column sm="4">
+                Username:
+              </Form.Label>
+                <Form.Control 
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label column sm="4">
+                Email:
+              </Form.Label>
+                <Form.Control 
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label column sm="4">
+                Password:
+              </Form.Label>
+                <Form.Control 
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label column sm="4">
+                Confirm Password:
+              </Form.Label>
+                <Form.Control 
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label column sm="4">
+                Profile Image:
+              </Form.Label>
+                <Form.Control 
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+            </Form.Group>
+            <Button className="w-100 mt-3" type="button" onClick={handleRegister}>
+              Register
+            </Button>
+            <span style={{fontSize: '0.8em', color: '#999999'}}>Already have an account? <a href="/login">Login</a></span>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
-
-const RegisterScreenStyled = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    label {
-      margin-bottom: 10px;
-    }
-
-    input {
-      margin-top: 5px;
-    }
-
-    button {
-      margin-top: 10px;
-      cursor: pointer;
-    }
-  }
-`;
 
 export default RegisterScreen;

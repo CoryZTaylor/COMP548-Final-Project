@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styled from "styled-components";
 import { useGlobalContext } from '../../context/globalContext';
 import { useNavigate } from 'react-router-dom';
+import { Container, Form, Button, Card } from 'react-bootstrap';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -16,10 +16,6 @@ const LoginScreen = () => {
     }
   };
 
-  const toRegister = () => {
-    navigate('/register');
-  }
-
   useEffect(() => {
     const checkToken = async () => {
       const token = localStorage.getItem('token');
@@ -31,60 +27,38 @@ const LoginScreen = () => {
   }, [navigate, verifyToken]);  
 
   return (
-    <LoginScreenStyled>
-      <form>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-        <button type="button" onClick={toRegister}>
-          Register
-        </button>
-      </form>
-    </LoginScreenStyled>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Card style={{ width: '300px' }}>
+        <Card.Body>
+          <h2 className="text-center mb-4">Log In</h2>
+          <Form>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group id="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control 
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button className="w-100 mt-3" type="button" onClick={handleLogin}>
+              Login
+            </Button>
+            <span style={{fontSize: '0.8em', color: '#999999'}}>Don't have an account? <a href="/register">Register here</a></span>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
-
-const LoginScreenStyled = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-
-  form {
-    display: flex;
-    flex-direction: column;
-
-    label {
-      margin-bottom: 10px;
-    }
-
-    input {
-      margin-top: 5px;
-    }
-
-    button {
-      margin-top: 10px;
-      cursor: pointer;
-    }
-  }
-`;
 
 export default LoginScreen;
