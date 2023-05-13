@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react"
 import axios from 'axios'
 
 
-const BASE_URL = `http://${process.env.HOST_URL}:5001/api/v1/`;
-const IMAGE_URL = `http://${process.env.HOST_URL}:5001/`;
+const BASE_URL = `${process.env.HOST_URL}:5001/api/v1/`;
+const IMAGE_URL = `${process.env.HOST_URL}:5001/`;
 
 
 const GlobalContext = React.createContext()
