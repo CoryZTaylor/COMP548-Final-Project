@@ -89,7 +89,7 @@ function Form() {
                     icon={plus}
                     bPad={'.8rem 1.6rem'}
                     bRad={'30px'}
-                    bg={'var(--color-purple'}
+                    bg={'var(--color-purple)'}
                     color={'#fff'}
                 />
             </div>

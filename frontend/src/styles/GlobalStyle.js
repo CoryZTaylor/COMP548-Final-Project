@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Roboto', sans-serif;
         font-size: clamp(1rem, 1.5vw, 1.2rem);
         overflow: hidden;
-        color: rgba(34, 34, 96, .6);
+        color: black;
     }
 
     h1, h2, h3, h4, h5, h6{
