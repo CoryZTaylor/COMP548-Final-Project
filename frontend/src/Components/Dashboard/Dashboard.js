@@ -44,23 +44,27 @@ function Dashboard() {
                     </div>
                     <div className="history-con">
                         <History />
-                        <h2 className="salary-title">Min <span>Salary</span>Max</h2>
-                        <div className="salary-item">
-                            <p>
-                                ${Math.min(...incomes.map(item => item.amount))}
-                            </p>
-                            <p>
-                                ${Math.max(...incomes.map(item => item.amount))}
-                            </p>
+                        <div className="salary-con">
+                            <h2 className="salary-title">Min <span>Income</span>Max</h2>
+                            <div className="salary-item">
+                                <p>
+                                    ${Math.min(...incomes.map(item => item.amount))}
+                                </p>
+                                <p>
+                                    ${Math.max(...incomes.map(item => item.amount))}
+                                </p>
+                            </div>
                         </div>
-                        <h2 className="salary-title">Min <span>Expense</span>Max</h2>
-                        <div className="salary-item">
-                            <p>
-                                ${Math.min(...expenses.map(item => item.amount))}
-                            </p>
-                            <p>
-                                ${Math.max(...expenses.map(item => item.amount))}
-                            </p>
+                        <div className="salary-con">
+                            <h2 className="salary-title">Min <span>Expense</span>Max</h2>
+                            <div className="salary-item">
+                                <p>
+                                    ${Math.min(...expenses.map(item => item.amount))}
+                                </p>
+                                <p>
+                                    ${Math.max(...expenses.map(item => item.amount))}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +84,7 @@ const DashboardStyled = styled.div`
             .amount-con{
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 2rem;
+                gap: 1em;
                 margin-top: 2rem;
                 .income, .expense{
                     grid-column: span 2;
@@ -102,7 +106,7 @@ const DashboardStyled = styled.div`
                 }
 
                 .balance{
-                    grid-column: 2 / 4;
+                    grid-column: 1 / 5;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -124,6 +128,14 @@ const DashboardStyled = styled.div`
                 align-items: center;
                 justify-content: space-between;
             }
+            .salary-con{
+                background: #FCF6F9;
+                border: 2px solid #FFFFFF;
+                box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+                padding: 1rem;
+                border-radius: 20px;
+                margin-top: 1em;
+            }
             .salary-title{
                 font-size: 1.2rem;
                 span{
@@ -131,19 +143,18 @@ const DashboardStyled = styled.div`
                 }
             }
             .salary-item{
-                background: #FCF6F9;
-                border: 2px solid #FFFFFF;
-                box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-                padding: 1rem;
-                border-radius: 20px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 p{
+                    color: #999999;
                     font-weight: 600;
                     font-size: 1.6rem;
                 }
             }
+        }
+        p {
+            margin-bottom: 0;
         }
     }
 `;
