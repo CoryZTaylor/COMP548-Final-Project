@@ -1,7 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
-import bg from './img/bg.png';
 import HomeRoute from './HomeRoute';
 import LoginScreen from './Components/User/LoginScreen';
 import RegisterScreen from './Components/User/RegisterScreen';
@@ -11,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   return (
-    <AppStyled bg={bg} className="App">
+    <AppStyled className="App">
       <Router>
         <Routes>
           <Route path="/" element={<HomeRoute />} />

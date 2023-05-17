@@ -39,7 +39,7 @@ exports.registerUser = async (req, res) => {
       username: username,
       email: email,
       password: hashedPassword,
-      image: req.file ? req.file.path : null
+      image: req.file ? req.file.location : null
     });
 
     await newUser.save();

@@ -3,7 +3,6 @@ import axios from 'axios'
 
 
 const BASE_URL = `${process.env.REACT_APP_HOST_URL}/api/v1/`;
-const IMAGE_URL = `${process.env.REACT_APP_HOST_URL}/`;
 
 
 const GlobalContext = React.createContext()
@@ -55,7 +54,7 @@ export const GlobalProvider = ({children}) => {
         const headers = { Authorization: token };
         try {
             const response = await axios.get(`${BASE_URL}user`, { headers });
-            response.data.image = `${IMAGE_URL}${response.data.image}`
+            response.data.image = response.data.image
             setUser(response.data);
         } catch (error) {
             console.error("Error fetching user:", error);
@@ -78,7 +77,7 @@ export const GlobalProvider = ({children}) => {
     //calculate incomes
     const addIncome = async (income) => {
         const headers = { Authorization: token };
-        const response = await axios.post(`${BASE_URL}add-income`, income, { headers })
+        await axios.post(`${BASE_URL}add-income`, income, { headers })
             .catch((err) =>{
                 setError(err.response.data.message)
             })
@@ -93,7 +92,7 @@ export const GlobalProvider = ({children}) => {
 
     const deleteIncome = async (id) => {
         const headers = { Authorization: token };
-        const res  = await axios.delete(`${BASE_URL}delete-income/${id}`, { headers })
+        await axios.delete(`${BASE_URL}delete-income/${id}`, { headers })
         getIncomes()
     }
 
@@ -112,7 +111,7 @@ export const GlobalProvider = ({children}) => {
         const headers = { Authorization: token };
       
         try {
-          const response = await axios.post(`${BASE_URL}add-expense`, expense, { headers });
+          await axios.post(`${BASE_URL}add-expense`, expense, { headers });
           getExpenses();
         } catch (err) {
           setError(err.response.data.message);
@@ -133,7 +132,7 @@ export const GlobalProvider = ({children}) => {
         const headers = { Authorization: token };
       
         try {
-          const res = await axios.delete(`${BASE_URL}delete-expense/${id}`, { headers });
+          await axios.delete(`${BASE_URL}delete-expense/${id}`, { headers });
           getExpenses();
         } catch (err) {
           setError(err.response.data.message);

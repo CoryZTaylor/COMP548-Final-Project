@@ -1,17 +1,25 @@
-// in a new file, e.g. multerConfig.js
-
+const aws = require('aws-sdk');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
-  }
+aws.config.update({
+  secretAccessKey: process.env.DO_SPACE_ACCESS_KEY,
+  accessKeyId: process.env.DO_SPACE_ACCESS_ID,
+  endpoint: process.env.DO_SPACE_REGION,
 });
 
-const upload = multer({ storage });
+const s3 = new aws.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.DO_SPACE_NAME,
+    acl: 'public-read',
+    key: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, uniqueSuffix + '-' + file.originalname);
+    }
+  })
+});
 
 module.exports = upload;
