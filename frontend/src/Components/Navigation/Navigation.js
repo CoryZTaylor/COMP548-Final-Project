@@ -10,13 +10,15 @@ function Navigation({active, setActive}) {
     const { logoutUser, user, fetchUser } = useGlobalContext();
     
     useEffect(() => {
-        fetchUser(); // Call fetchUser when the component mounts
+        if (!user) {
+            fetchUser(); // Call fetchUser when the component mounts
+        }
       }, []);
 
     return (
         <NavStyled>
             <div className="user-con"> 
-                <img src={user ? user.image : avatar} alt="" />
+                <img src={user?.image ? user.image : avatar} alt="User Avatar" />
                 <div className="text">
                     <h2>{user ? user.username : "Loading..."}</h2>
                 </div>

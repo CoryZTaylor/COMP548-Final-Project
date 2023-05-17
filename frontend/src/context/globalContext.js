@@ -23,25 +23,31 @@ export const GlobalProvider = ({children}) => {
 
     const registerUser = async (username, email, password, confirmPassword, image) => {
         try {
-            const formData = new FormData();
-            formData.append('username', username);
-            formData.append('email', email);
-            formData.append('password', password);
-            formData.append('confirmPassword', confirmPassword);
-            formData.append('image', image);
-        
-            const response = await axios.post(`${BASE_URL}register`, formData);
-            localStorage.setItem('token', response.data.token);
-            setToken(response.data.token);
-            return true;
+          const formData = new FormData();
+          formData.append('username', username);
+          formData.append('email', email);
+          formData.append('password', password);
+          formData.append('confirmPassword', confirmPassword);
+          formData.append('image', image);
+      
+          const response = await axios.post(`${BASE_URL}register`, formData);
+          localStorage.setItem('token', response.data.token);
+          setToken(response.data.token);
+          return [true, ''];
         } catch (error) {
-            return false;
+          // It is possible that the error does not have a response or data, handle such cases gracefully
+          const errorMessage = error.response && error.response.data && error.response.data.message 
+            ? error.response.data.message
+            : 'Unexpected error occurred';
+            
+          return [false, errorMessage];
         }
       };      
 
     const logoutUser = () => {
         localStorage.removeItem('token');
         setToken(null);
+        setUser(null);
     };
 
     // Add a new state variable to store the user information

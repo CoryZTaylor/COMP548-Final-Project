@@ -25,12 +25,16 @@ exports.registerUser = async (req, res) => {
   const existingUsername = await UserModel.findOne({ username });
   const existingEmail = await UserModel.findOne({ email });
 
+  const passwordValidation = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+
   if (existingUsername) {
     res.status(400).json({ message: 'User with this username already exists.' });
   } else if (existingEmail) {
     res.status(400).json({ message: 'User with this email already exists.' });
   } else if (confirmPassword != password){
     res.status(400).json({ message: 'Passwords must match.' });
+  } else if (!passwordValidation.test(password)) {
+    res.status(400).json({ message: 'Password must be 8 or more characters with at least one capital, lower case, number and special character.' });
   } else {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
