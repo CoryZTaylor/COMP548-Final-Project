@@ -70,7 +70,7 @@ const NavStyled = styled.nav`
             box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
         }
         h2{
-            color: rgba(34, 34, 96, 1);
+            color: black;
         }
         p{
             color: rgba(34, 34, 96, .6);
@@ -89,11 +89,11 @@ const NavStyled = styled.nav`
             font-weight: 500;
             cursor: pointer;
             transition: all .4s ease-in-out;
-            color: rgba(34, 34, 96, .6);
+            color: var(--color-purple);
             padding-left: 1rem;
             position: relative;
             i{
-                color: rgba(34, 34, 96, 0.6);
+                color: var(--color-purple);
                 font-size: 1.4rem;
                 transition: all .4s ease-in-out;
             }
@@ -101,9 +101,9 @@ const NavStyled = styled.nav`
     }
 
     .active{
-        color: rgba(34, 34, 96, 1) !important;
+        color: var(--color-pink) !important;
         i{
-            color: rgba(34, 34, 96, 1) !important;
+            color: var(--color-pink) !important;
         }
         &::before{
             content: "";
