@@ -47,11 +47,11 @@ function Dashboard() {
                         <div className="salary-con">
                             <h2 className="salary-title">Min <span>Income</span>Max</h2>
                             <div className="salary-item">
-                                <p>
-                                    ${Math.min(...incomes.map(item => item.amount))}
+                            <p>
+                                    ${incomes.length ? Math.min(...incomes.map(item => item.amount)) : 0}
                                 </p>
                                 <p>
-                                    ${Math.max(...incomes.map(item => item.amount))}
+                                    ${incomes.length ? Math.max(...incomes.map(item => item.amount)) : 0}
                                 </p>
                             </div>
                         </div>
@@ -59,10 +59,10 @@ function Dashboard() {
                             <h2 className="salary-title">Min <span>Expense</span>Max</h2>
                             <div className="salary-item">
                                 <p>
-                                    ${Math.min(...expenses.map(item => item.amount))}
+                                    ${expenses.length ? Math.min(...expenses.map(item => item.amount)) : 0}
                                 </p>
                                 <p>
-                                    ${Math.max(...expenses.map(item => item.amount))}
+                                    ${expenses.length ? Math.max(...expenses.map(item => item.amount)) : 0}
                                 </p>
                             </div>
                         </div>
