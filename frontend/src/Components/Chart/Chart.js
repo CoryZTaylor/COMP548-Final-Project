@@ -26,47 +26,59 @@ ChartJs.register(
     ArcElement,
 )
 
+const toLabelFormat = (date) => dateFormat(date);
+
 function Chart() {
-    const {incomes, expenses} = useGlobalContext()
-
+    const { incomes, expenses } = useGlobalContext();
+  
+    // Create a set of all dates from incomes and expenses
+    const allDatesSet = new Set([
+      ...incomes.map((inc) => toLabelFormat(inc.date)),
+      ...expenses.map((exp) => toLabelFormat(exp.date)),
+    ]);
+  
+    // Sort and convert to array
+    const allDatesArray = Array.from(allDatesSet).sort();
+  
+    // For each date, calculate sum of incomes and expenses
+    const incomeData = allDatesArray.map((date) => {
+      return incomes
+        .filter((inc) => toLabelFormat(inc.date) === date)
+        .reduce((sum, inc) => sum + inc.amount, null);
+    });
+  
+    const expenseData = allDatesArray.map((date) => {
+      return expenses
+        .filter((exp) => toLabelFormat(exp.date) === date)
+        .reduce((sum, exp) => sum + exp.amount, null);
+    });
+  
     const data = {
-        labels: incomes.map((inc) =>{
-            const {date} = inc
-            return dateFormat(date)
-        }),
-        datasets: [
-            {
-                label: 'Income',
-                data: [
-                    ...incomes.map((income) => {
-                        const {amount} = income
-                        return amount
-                    })
-                ],
-                backgroundColor: 'green',
-                tension: .2
-            },
-            {
-                label: 'Expenses',
-                data: [
-                    ...expenses.map((expense) => {
-                        const {amount} = expense
-                        return amount
-                    })
-                ],
-                backgroundColor: 'red',
-                tension: .2
-            }
-        ]
-    }
-
-
+      labels: allDatesArray,
+      datasets: [
+        {
+          label: "Income",
+          data: incomeData,
+          backgroundColor: "green",
+          tension: 0.2,
+          spanGaps: true
+        },
+        {
+          label: "Expenses",
+          data: expenseData,
+          backgroundColor: "red",
+          tension: 0.2,
+          spanGaps: true
+        },
+      ],
+    };
+  
     return (
-        <ChartStyled >
-            <Line data={data} />
-        </ChartStyled>
-    )
-}
+      <ChartStyled>
+        <Line data={data} />
+      </ChartStyled>
+    );
+  }  
 
 const ChartStyled = styled.div`
     background: #FCF6F9;
